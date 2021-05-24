@@ -1,5 +1,5 @@
-#ifndef TEMPLATE_PICOSHA_HPP
-#define TEMPLATE_PICOSHA_HPP
+#ifndef INCLUDE_PICOSHA2_HPP_
+#define INCLUDE_PICOSHA2_HPP_
 
 #ifndef PICOSHA2_BUFFER_SIZE_FOR_INPUT_ITERATOR
 #define PICOSHA2_BUFFER_SIZE_FOR_INPUT_ITERATOR \
@@ -12,6 +12,7 @@
 #include <iterator>
 #include <sstream>
 #include <vector>
+#include <string>
 namespace picosha2 {
 typedef unsigned long word_t;
 typedef unsigned char byte_t;
@@ -351,4 +352,4 @@ void hash256(std::ifstream& f, OutIter first, OutIter last) {
 }
 }  // namespace picosha2
 
-#endif  // TEMPLATE_PICOSHA_HPP
+#endif  // INCLUDE_PICOSHA2_HPP_

@@ -19,8 +19,6 @@
 #include <string>
 #include <vector>
 
-using namespace rocksdb;
-using namespace boost::program_options;
 
 class Dbcs {
  public:
