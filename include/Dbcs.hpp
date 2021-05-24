@@ -17,6 +17,7 @@
 #include <mutex>
 #include <picosha2.hpp>
 #include <string>
+#include <vector>
 
 using namespace rocksdb;
 using namespace boost::program_options;
@@ -26,7 +27,8 @@ class Dbcs {
   Dbcs();
   void read_db(int thread_count, std::string &path, std::string &output);
   void producer(int thread_count, std::string &path, std::string &output);
-  void create_start_db(int thread_count, std::string &path, std::string& output);
+  void create_start_db(int thread_count, std::string &path,
+                       std::string& output);
   void init_log(std::string log_str);
   void log(std::string message);
   void out_help();
