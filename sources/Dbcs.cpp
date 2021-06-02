@@ -106,6 +106,12 @@ void Dbcs::read_db(int thread_count, std::string &path, std::string &output) {
   options.create_if_missing = false;
 
   rocksdb::Status status = rocksdb::DB::OpenForReadOnly(options, path, &db_);
+
+  if (!status.ok()) {
+    create_start_db(thread_count, path, output);
+    return;
+  }
+
   assert(status.ok());
 
   db_->ListColumnFamilies(options, path, &families_);
@@ -113,8 +119,25 @@ void Dbcs::read_db(int thread_count, std::string &path, std::string &output) {
   delete db_;
 
   families_.erase(families_.begin());
+
   options.create_if_missing = true;
+  options.error_if_exists = true;
   status = rocksdb::DB::Open(options, output, &db_hash);
+
+  if (!status.ok()) {
+    std::vector<std::string> families;
+    db_hash->ListColumnFamilies(options, output, &families);
+    std::vector<rocksdb::ColumnFamilyDescriptor> column_families;
+    for (auto &family : families)
+      column_families.push_back(rocksdb::ColumnFamilyDescriptor(
+          family, rocksdb::ColumnFamilyOptions()));
+    rocksdb::DestroyDB(output, options, column_families);
+    delete db_hash;
+
+    options.create_if_missing = true;
+    options.error_if_exists = false;
+    status = rocksdb::DB::Open(options, output, &db_hash);
+  }
   assert(status.ok());
 
   for (auto &family : families_) {
