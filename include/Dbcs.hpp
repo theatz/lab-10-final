@@ -19,6 +19,10 @@
 #include <string>
 #include <vector>
 
+/**
+ * @brief Class to operate with existed ( created by time ) rocksdb DataBase
+ * @class Dbcs
+ */
 
 class Dbcs {
  public:
